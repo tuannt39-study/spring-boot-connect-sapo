@@ -1,0 +1,12 @@
+
+server:
+  port: 29000
+  ssl:
+    key-alias: tomcat
+    key-store-password: admin1234
+    key-store: src/main/resources/springboot.keystore
+
+sapo:
+  client:
+    clientId: cab6af39ca1a423286323ddc654626aa
+    clientSecret: b645e7b7107c4ed691ab8b67113ac600
