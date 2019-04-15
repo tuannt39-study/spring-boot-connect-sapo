@@ -1,8 +1,32 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
         <title>Hello Sapo</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
     <body>
         <h3>Hello Sapo</h3>
+
+        <form action="#" th:action="@{/authorize}" th:object="${authorize}" method="post">
+            <p>
+                <label for="store">Store:</label>
+                <input type="text" name="store" id="store" th:field="*{store}" />
+            </p>
+            <p>
+                <label for="apiKey">Api Key:</label>
+                <input type="text" name="apiKey" id="apiKey" th:field="*{apiKey}" />
+            </p>
+            <p>
+                <label for="scopes">Scopes:</label>
+                <input type="text" name="scopes" id="scopes" th:field="*{scopes}" />
+            </p>
+            <p>
+                <label for="redirectUri">Redirect Uri:</label>
+                <input type="text" name="redirectUri" id="redirectUri" th:field="*{redirectUri}" />
+            </p>
+            <p>
+                <input type="submit" value="Connect" />
+            </p>
+        </form>
+
     </body>
 </html>

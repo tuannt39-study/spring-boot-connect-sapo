@@ -1,27 +1,21 @@
 package vn.sapo.controller;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import vn.sapo.config.SapoProperties;
+import vn.sapo.domain.Authorize;
 
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.Collections;
 
 @Controller
 @RequestMapping("/")
 public class SapoConnectController {
-
-    @Value("sapo.client.clientId")
-    private String clientId;
-    @Value("sapo.client.clientSecret")
-    private String clientSecret;
 
     private final SapoProperties sapoProperties;
 
@@ -30,18 +24,25 @@ public class SapoConnectController {
     }
 
     @GetMapping
-    public String hello() {
+    public String hello(Model model) {
+        model.addAttribute("authorize", new Authorize());
         return "hello";
     }
 
-    @GetMapping("/connected")
+    @GetMapping("connected")
     public String connected() {
         return "connected";
     }
 
-    @GetMapping("/connectFail")
+    @GetMapping("connectFail")
     public String connectFail() {
         return "connectFail";
+    }
+
+    @PostMapping("authorize")
+    public String authorize(@ModelAttribute Authorize authorize) {
+        String url = "https://" + authorize.getStore() + ".bizwebvietnam.net/admin/oauth/authorize?client_id=" + authorize.getApiKey() + "&scope=" + authorize.getScopes() + "&redirect_uri=" + authorize.getRedirectUri();
+        return "redirect:" + url;
     }
 
     @GetMapping("auth")
